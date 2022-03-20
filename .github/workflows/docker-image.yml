@@ -20,5 +20,5 @@ jobs:
       - name: Log swift version
         run: pwd; ls
       - name: Run a script
-        run: $GITHUB_ACTION_PATH/script.sh
+        run: ./script.sh
         shell: bash
