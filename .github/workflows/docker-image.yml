@@ -15,3 +15,13 @@ jobs:
       - name: Log swift version
         run: |
           swift --version
+      - name: Step with docker
+        uses: docker://swift:nightly-5.6-focal
+        with:
+          entrypoint: '/bin/echo'
+          args: 'Hello World'
+      - name: Log swift version
+        uses: docker://swift:nightly-5.6-focal
+        with:
+          entrypoint: '/usr/bin/swift'
+          args: -v
