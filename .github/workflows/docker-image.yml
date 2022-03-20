@@ -20,8 +20,8 @@ jobs:
       #   with:
       #     entrypoint: '/bin/echo'
       #     args: 'Hello World'
-      # - name: Log swift version
-      #   uses: docker://swift:nightly-5.6-focal
-      #   with:
-      #     entrypoint: '/usr/bin/swift'
-      #     args: -v
+      - name: Log swift version
+        uses: docker://swift:nightly-5.6-focal
+        with:
+          entrypoint: '/usr/bin/swift'
+          args: -v
