@@ -1,5 +1,5 @@
-#!/bin/sh
-echo $1
+#!/bin/bash
+
 echo "Hello World"
 pwd
 which swift
