@@ -18,7 +18,6 @@ jobs:
           swift --version
       - uses: actions/checkout@v2
       - name: Run a script
-        uses: actions/github-script@v6
         with:
           entrypoint: './script.sh'
           args: "Some string"
