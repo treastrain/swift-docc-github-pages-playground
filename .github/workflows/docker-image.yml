@@ -13,9 +13,7 @@ jobs:
       image: swiftlang/swift:nightly-5.6-focal
     steps:
       - name: Log swift version
-        run: |
-          which swift
-          swift --version
+        run: swift --version
       - uses: actions/checkout@v2
       - name: Run a script
         run: ./script.sh
