@@ -10,7 +10,7 @@ jobs:
   swift-docker:
     runs-on: ubuntu-20.04
     container:
-      image: swift:nightly-5.6-focal-slim
+      image: swiftlang/swift:nightly-5.6-focal-slim
     steps:
       - name: Log swift version
         run: |
