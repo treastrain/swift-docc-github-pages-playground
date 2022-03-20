@@ -17,8 +17,6 @@ jobs:
           which swift
           swift --version
       - uses: actions/checkout@v2
-      - name: Log swift version
-        run: pwd; ls
       - name: Run a script
         run: ./script.sh
         shell: bash
