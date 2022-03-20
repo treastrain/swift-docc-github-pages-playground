@@ -12,11 +12,12 @@ jobs:
     container:
       image: swiftlang/swift:nightly-5.6-focal
     steps:
-      - uses: actions/checkout@v2
       - name: Log swift version
         run: |
           swift --version
+      - uses: actions/checkout@v2
       - name: Run a script
+        uses: docker://swiftlang/swift:nightly-5.6-focal
         with:
           entrypoint: './script.sh'
           args: "Some string"
