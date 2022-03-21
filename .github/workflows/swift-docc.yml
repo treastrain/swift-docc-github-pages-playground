@@ -27,9 +27,9 @@ jobs:
           --transform-for-static-hosting \
           --hosting-base-path ${{ env.HOSTING_BASE_PATH }} \
           --output-path ${{ env.PATH_TO_DOCS_DIRECTORY }}
-      - name: Upload generated documentation
-        if: always()
-        uses: actions/upload-artifact@v2
+      - name: Upload documentation to GitHub Pages
+        uses: treastrain/github-pages-publish-action@v1
         with:
-          name: Documentation
-          path: docs
+          path: "docs"
+        env:
+          GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
