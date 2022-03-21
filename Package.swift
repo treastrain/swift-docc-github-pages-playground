@@ -2,6 +2,15 @@
 
 import PackageDescription
 
+let dependencies: [Package.Dependency]
+#if swift(>=5.6)
+dependencies = [
+    .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
+]
+#else
+dependencies = []
+#endif
+
 let package = Package(
     name: "SquareLigatureEraNameDecomposer",
     defaultLocalization: "ja",
@@ -10,9 +19,7 @@ let package = Package(
             name: "SquareLigatureEraNameDecomposer",
             targets: ["SquareLigatureEraNameDecomposer"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
-    ],
+    dependencies: dependencies,
     targets: [
         .target(
             name: "SquareLigatureEraNameDecomposer",
