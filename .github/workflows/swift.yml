@@ -28,7 +28,7 @@ jobs:
       run: xcpretty --version
   
   swift_build:
-    name: Run swift build
+    name: Run swift build (Swift 5.5)
     strategy:
       fail-fast: false
       matrix:
@@ -52,7 +52,7 @@ jobs:
         path: swift-build-${{ matrix.os }}_x86_64.log
   
   swift_test:
-    name: Run swift test
+    name: Run swift test (Swift 5.5)
     needs: swift_build
     strategy:
       fail-fast: false
