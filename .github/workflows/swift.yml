@@ -1,0 +1,64 @@
+name: Swift Build & Test, Xcode Build & Test
+
+on:
+  push:
+  pull_request:
+
+env:
+  SCHEME_NAME: SquareLigatureEraNameDecomposer
+  IOS_SIMULATOR_NAME: iPhone 13 mini
+  TVOS_SIMULATOR_NAME: Apple TV 4K (2nd generation)
+  WATCHOS_SIMULATOR_NAME: Apple Watch Series 7 - 45mm
+
+jobs:
+  show_software_information:
+    name: Show software information
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v2
+    - name: Show Xcode list
+      run: ls -n /Applications | grep 'Xcode'
+    - name: Show the default version of Xcode
+      run: xcodebuild -version
+    - name: Show lists the targets and configurations in a project, or the schemes in a workspace
+      run: xcodebuild -list
+    - name: Show a list of destinations
+      run: xcodebuild test -scheme ${{ env.SCHEME_NAME }} -showdestinations
+    - name: Show xcpretty version
+      run: xcpretty --version
+  
+  swift_build:
+    name: Swift Build
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-11, ubuntu-20.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Swift version
+      run: swift --version
+    - name: Build
+      if: ${{ matrix.os == 'macos-11' }}
+      run: swift build -v | tee swift-build-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
+    - name: Build with enable test discovery on platforms without Objective-C runtime
+      if: ${{ matrix.os == 'ubuntu-20.04' }}
+      run: swift build -v --enable-test-discovery | tee swift-build-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
+    - name: Upload swift build log
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: swift build log (${{ matrix.os }}, x86_64)
+        path: swift-build-${{ matrix.os }}_x86_64.log
+  
+  # swift-docker:
+  #   runs-on: ubuntu-20.04
+  #   container:
+  #     image: swiftlang/swift:nightly-5.6-focal
+  #   steps:
+  #     - name: Log swift version
+  #       run: swift --version
+  #     - uses: actions/checkout@v2
+  #     - name: Run a script
+  #       run: ./script.sh
+  #       shell: bash
