@@ -1,4 +1,4 @@
-name: Swift Build & Test, Xcode Build & Test
+name: Swift Build & Test
 
 on:
   push:
@@ -6,29 +6,10 @@ on:
 
 env:
   SCHEME_NAME: SquareLigatureEraNameDecomposer
-  IOS_SIMULATOR_NAME: iPhone 13 mini
-  TVOS_SIMULATOR_NAME: Apple TV 4K (2nd generation)
-  WATCHOS_SIMULATOR_NAME: Apple Watch Series 7 - 45mm
 
 jobs:
-  show_software_information:
-    name: Show software information
-    runs-on: macos-11
-    steps:
-    - uses: actions/checkout@v2
-    - name: Show Xcode list
-      run: ls -n /Applications | grep 'Xcode'
-    - name: Show the default version of Xcode
-      run: xcodebuild -version
-    - name: Show lists the targets and configurations in a project, or the schemes in a workspace
-      run: xcodebuild -list
-    - name: Show a list of destinations
-      run: xcodebuild test -scheme ${{ env.SCHEME_NAME }} -showdestinations
-    - name: Show xcpretty version
-      run: xcpretty --version
-  
-  swift_build:
-    name: Run swift build (Swift 5.5)
+  swift_55_build:
+    name: Build with Swift 5.5
     strategy:
       fail-fast: false
       matrix:
@@ -51,9 +32,9 @@ jobs:
         name: swift build log (${{ matrix.os }}, x86_64)
         path: swift-build-${{ matrix.os }}_x86_64.log
   
-  swift_test:
-    name: Run swift test (Swift 5.5)
-    needs: swift_build
+  swift_55_test:
+    name: Test with Swift 5.5
+    needs: swift_55_build
     strategy:
       fail-fast: false
       matrix:
