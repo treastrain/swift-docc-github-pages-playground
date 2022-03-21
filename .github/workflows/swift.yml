@@ -28,7 +28,7 @@ jobs:
       run: xcpretty --version
   
   swift_build:
-    name: Swift Build
+    name: Run swift build
     strategy:
       fail-fast: false
       matrix:
@@ -51,6 +51,31 @@ jobs:
         name: swift build log (${{ matrix.os }}, x86_64)
         path: swift-build-${{ matrix.os }}_x86_64.log
   
+  swift_test:
+    name: Run swift test
+    needs: swift_build
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-11, ubuntu-20.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Swift version
+      run: swift --version
+    - name: Run tests
+      if: ${{ matrix.os == 'macos-11' }}
+      run: swift test -v | tee swift-test-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
+    - name: Run tests with enable test discovery on platforms without Objective-C runtime
+      if: ${{ matrix.os == 'ubuntu-20.04' }}
+      run: swift test -v --enable-test-discovery | tee swift-test-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
+    - name: Upload swift test log
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: swift test log (${{ matrix.os }}, x86_64)
+        path: swift-test-${{ matrix.os }}_x86_64.log
+
   # swift-docker:
   #   runs-on: ubuntu-20.04
   #   container:
