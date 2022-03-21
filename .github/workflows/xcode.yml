@@ -33,15 +33,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: ['iOS', 'macOS (x86_64)', 'Mac Catalyst (x86_64)', 'tvOS', 'watchOS']
+        platform: ['iOS', 'macOS x86_64', 'Mac Catalyst x86_64', 'tvOS', 'watchOS']
     steps:
     - uses: actions/checkout@v2
     - name: Test the scheme
       run: |
         case '${{ matrix.platform }}' in
           'iOS' ) xcodebuild test -scheme ${{ env.SCHEME_NAME }} -destination 'name=${{ env.IOS_SIMULATOR_NAME }}' | tee xcodebuild-test-${{ matrix.platform }}.log | xcpretty --color --report html && exit ${PIPESTATUS[0]} ;;
-          'macOS (x86_64)' ) xcodebuild test -scheme ${{ env.SCHEME_NAME }} -destination 'platform=macOS,arch=x86_64' | tee xcodebuild-test-${{ matrix.platform }}.log | xcpretty --color --report html && exit ${PIPESTATUS[0]} ;;
-          'Mac Catalyst (x86_64)' ) xcodebuild test -scheme ${{ env.SCHEME_NAME }} -destination 'platform=macOS,arch=x86_64,variant=Mac Catalyst' | tee xcodebuild-test-${{ matrix.platform }}.log | xcpretty --color --report html && exit ${PIPESTATUS[0]} ;;
+          'macOS x86_64' ) xcodebuild test -scheme ${{ env.SCHEME_NAME }} -destination 'platform=macOS,arch=x86_64' | tee xcodebuild-test-${{ matrix.platform }}.log | xcpretty --color --report html && exit ${PIPESTATUS[0]} ;;
+          'Mac Catalyst x86_64' ) xcodebuild test -scheme ${{ env.SCHEME_NAME }} -destination 'platform=macOS,arch=x86_64,variant=Mac Catalyst' | tee xcodebuild-test-${{ matrix.platform }}.log | xcpretty --color --report html && exit ${PIPESTATUS[0]} ;;
           'tvOS' ) xcodebuild test -scheme ${{ env.SCHEME_NAME }} -destination 'name=${{ env.TVOS_SIMULATOR_NAME }}' | tee xcodebuild-test-${{ matrix.platform }}.log | xcpretty --color --report html && exit ${PIPESTATUS[0]} ;;
           'watchOS' ) xcodebuild test -scheme ${{ env.SCHEME_NAME }} -destination 'name=${{ env.WATCHOS_SIMULATOR_NAME }}' | tee xcodebuild-test-${{ matrix.platform }}.log | xcpretty --color --report html && exit ${PIPESTATUS[0]} ;;
         esac
