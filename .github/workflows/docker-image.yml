@@ -1,10 +1,13 @@
-name: Docker Image CI
+name: Generate Documentation
 
 on:
   push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+
+env:
+  SCHEME_NAME: SquareLigatureEraNameDecomposer
+  PATH_TO_DOCS_DIRECTORY: docs
+  HOSTING_BASE_PATH: swift-docc-github-pages-playground
 
 jobs:
   swift-docker:
@@ -12,9 +15,14 @@ jobs:
     container:
       image: swiftlang/swift:nightly-5.6-focal
     steps:
-      - name: Log swift version
+      - name: Show Swift version
         run: swift --version
       - uses: actions/checkout@v2
-      - name: Run a script
-        run: ./script.sh
-        shell: bash
+      - name: Generate documentation
+        run: |
+          swift package --allow-writing-to-directory ${{ env.PATH_TO_DOCS_DIRECTORY }} \
+          generate-documentation --target ${{ env.SCHEME_NAME }} \
+          --disable-indexing \
+          --transform-for-static-hosting \
+          --hosting-base-path ${{ env.HOSTING_BASE_PATH }} \
+          --output-path ${{ env.PATH_TO_DOCS_DIRECTORY }}
