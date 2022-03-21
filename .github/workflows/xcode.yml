@@ -1,0 +1,28 @@
+name: Xcode Build & Test
+
+on:
+  push:
+  pull_request:
+
+env:
+  SCHEME_NAME: SquareLigatureEraNameDecomposer
+  IOS_SIMULATOR_NAME: iPhone 13 mini
+  TVOS_SIMULATOR_NAME: Apple TV 4K (2nd generation)
+  WATCHOS_SIMULATOR_NAME: Apple Watch Series 7 - 45mm
+
+jobs:
+  show_software_information:
+    name: Show software information
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v2
+    - name: Show Xcode list
+      run: ls -n /Applications | grep 'Xcode'
+    - name: Show the default version of Xcode
+      run: xcodebuild -version
+    - name: Show lists the targets and configurations in a project, or the schemes in a workspace
+      run: xcodebuild -list
+    - name: Show a list of destinations
+      run: xcodebuild test -scheme ${{ env.SCHEME_NAME }} -showdestinations
+    - name: Show xcpretty version
+      run: xcpretty --version
