@@ -6,7 +6,7 @@ on:
 
 env:
   SCHEME_NAME: SquareLigatureEraNameDecomposer
-  PATH_TO_DOCS_DIRECTORY: docs
+  PATH_TO_DOCS_DIRECTORY: .
   HOSTING_BASE_PATH: swift-docc-github-pages-playground
 
 jobs:
