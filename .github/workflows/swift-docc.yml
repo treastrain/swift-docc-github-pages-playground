@@ -6,7 +6,7 @@ on:
 
 env:
   SCHEME_NAME: SquareLigatureEraNameDecomposer
-  PATH_TO_DOCS_DIRECTORY: .
+  PATH_TO_DOCS_DIRECTORY: docs
   HOSTING_BASE_PATH: swift-docc-github-pages-playground
 
 jobs:
@@ -30,6 +30,6 @@ jobs:
       - name: Upload documentation to GitHub Pages
         uses: treastrain/github-pages-publish-action@v1
         with:
-          path: "docs"
+          path: ${{ env.PATH_TO_DOCS_DIRECTORY }}
         env:
           GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
