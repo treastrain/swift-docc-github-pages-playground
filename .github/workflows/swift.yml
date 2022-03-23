@@ -47,6 +47,7 @@ jobs:
     - name: Run tests with enable test discovery on platforms without Objective-C runtime
       if: ${{ matrix.os == 'ubuntu-20.04' }}
       run: swift test -v --enable-test-discovery | tee swift-5.5-test-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
+      shell: bash
     - name: Upload swift test log
       if: always()
       uses: actions/upload-artifact@v2
@@ -64,8 +65,6 @@ jobs:
     container:
       image: swiftlang/swift:nightly-5.6-focal
     steps:
-    - name: Use Bash
-      run: bash
     - name: Show Swift version
       run: swift --version
     - uses: actions/checkout@v2
@@ -93,8 +92,6 @@ jobs:
     container:
       image: swiftlang/swift:nightly-5.6-focal
     steps:
-    - name: Use Bash
-      run: bash
     - name: Show Swift version
       run: swift --version
     - uses: actions/checkout@v2
@@ -104,6 +101,7 @@ jobs:
     - name: Run tests with enable test discovery on platforms without Objective-C runtime
       if: ${{ matrix.os == 'ubuntu-20.04' }}
       run: swift test -v --enable-test-discovery | tee swift-5.6-test-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
+      shell: bash
     - name: Upload swift test log
       if: always()
       uses: actions/upload-artifact@v2
