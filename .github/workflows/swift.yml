@@ -24,10 +24,11 @@ jobs:
       run: swift build -v --enable-test-discovery | tee swift-5.5-build-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
     - name: Upload swift build log
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: swift 5.5 build log (${{ matrix.os }}, x86_64)
         path: swift-5.5-build-${{ matrix.os }}_x86_64.log
+        if-no-files-found: error
   
   swift_55_test:
     name: Test with Swift 5.5
@@ -49,10 +50,11 @@ jobs:
       run: swift test -v --enable-test-discovery | tee swift-5.5-test-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
     - name: Upload swift test log
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: swift 5.5 test log (${{ matrix.os }}, x86_64)
         path: swift-5.5-test-${{ matrix.os }}_x86_64.log
+        if-no-files-found: error
   
   swift_56_build:
     name: Build with Swift 5.6
@@ -76,10 +78,11 @@ jobs:
       shell: bash
     - name: Upload swift build log
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: swift 5.6 build log (${{ matrix.os }}, x86_64)
         path: swift-5.6-build-${{ matrix.os }}_x86_64.log
+        if-no-files-found: error
   
   swift_56_test:
     name: Test with Swift 5.6
@@ -104,7 +107,8 @@ jobs:
       shell: bash
     - name: Upload swift test log
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: swift 5.6 test log (${{ matrix.os }}, x86_64)
         path: swift-5.6-test-${{ matrix.os }}_x86_64.log
+        if-no-files-found: error

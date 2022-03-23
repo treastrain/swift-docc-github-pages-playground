@@ -47,16 +47,18 @@ jobs:
         esac
     - name: Upload Xcode DerivedData
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Xcode DerivedData (${{ matrix.platform }})
         path: |
             /Users/runner/Library/Developer/Xcode/DerivedData
+        if-no-files-found: error
     - name: Upload Xcode Test report
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: xcodebuild test log and report (${{ matrix.platform }})
         path: |
             xcodebuild-test-${{ matrix.platform }}.log
             build/reports/tests.html
+        if-no-files-found: error
