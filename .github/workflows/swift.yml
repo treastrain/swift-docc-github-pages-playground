@@ -64,6 +64,8 @@ jobs:
     container:
       image: swiftlang/swift:nightly-5.6-focal
     steps:
+    - name: Use Bash
+      run: bash
     - name: Show Swift version
       run: swift --version
     - uses: actions/checkout@v2
@@ -72,7 +74,7 @@ jobs:
       run: swift build -v | tee swift-5.6-build-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
     - name: Build with enable test discovery on platforms without Objective-C runtime
       if: ${{ matrix.os == 'ubuntu-20.04' }}
-      run: swift build -v --enable-test-discovery # | tee swift-5.6-build-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
+      run: swift build -v --enable-test-discovery | tee swift-5.6-build-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
     - name: Upload swift build log
       if: always()
       uses: actions/upload-artifact@v2
@@ -91,6 +93,8 @@ jobs:
     container:
       image: swiftlang/swift:nightly-5.6-focal
     steps:
+    - name: Use Bash
+      run: bash
     - name: Show Swift version
       run: swift --version
     - uses: actions/checkout@v2
