@@ -16,10 +16,14 @@ jobs:
   swift-docc-plugin:
     name: Generate documentation by Swift-DocC Plugin
     runs-on: ubuntu-20.04
-    if: github.event.workflow_run.conclusion == 'success'
     container:
       image: swiftlang/swift:nightly-5.6-focal
     steps:
+      - name: Make fail if the previous workflow was failed
+        if: ${{ github.event.workflow_run.conclusion != 'success' }}
+        run: |
+          echo '::error::Previous workflow was failed'
+          exit 1
       - name: Show Swift version
         run: swift --version
       - uses: actions/checkout@v2
