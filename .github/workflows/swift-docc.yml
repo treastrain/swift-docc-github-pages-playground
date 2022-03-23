@@ -1,8 +1,10 @@
 name: Generate Documentation
 
 on:
-  push:
-  pull_request:
+  workflow_run:
+    workflows: [Swift Build & Test]
+    types:
+      - completed
 
 env:
   SCHEME_NAME: SquareLigatureEraNameDecomposer
