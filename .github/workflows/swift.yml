@@ -66,12 +66,6 @@ jobs:
     steps:
     - name: Show Swift version
       run: swift --version
-    - name: Print $SHELL 1
-      run: echo $SHELL
-      shell: bash
-    - name: Print $SHELL 2
-      run: echo $SHELL
-      shell: bash
     - uses: actions/checkout@v2
     - name: Build
       if: ${{ matrix.os == 'macos-12' }}
@@ -107,6 +101,7 @@ jobs:
     - name: Run tests with enable test discovery on platforms without Objective-C runtime
       if: ${{ matrix.os == 'ubuntu-20.04' }}
       run: swift test -v --enable-test-discovery | tee swift-5.6-test-${{ matrix.os }}_x86_64.log && exit ${PIPESTATUS[0]}
+      shell: bash
     - name: Upload swift test log
       if: always()
       uses: actions/upload-artifact@v2
