@@ -94,6 +94,12 @@ jobs:
     steps:
     - name: Show Swift version
       run: swift --version
+    - name: Print $SHELL 1
+      run: echo $SHELL
+      shell: bash
+    - name: Print $SHELL 2
+      run: echo $SHELL
+      shell: bash
     - uses: actions/checkout@v2
     - name: Run tests
       if: ${{ matrix.os == 'macos-12' }}
